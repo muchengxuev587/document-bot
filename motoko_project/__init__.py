@@ -1,0 +1,2 @@
+from .motoko import Motoko
+

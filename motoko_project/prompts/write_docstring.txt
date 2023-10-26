@@ -1,0 +1,115 @@
+
+PYTHON_DOCSTRING_SYSTEM = '''### Requirements
+1. Add docstrings to the given code following the {style} style.
+2. Replace the function body with an Ellipsis object(...) to reduce output.
+3. If the types are already annotated, there is no need to include them in the docstring.
+4. Extract only class, function or the docstrings for the module parts from the given Python code, avoiding any other text.
+
+### Input Example
+```python
+def function_with_pep484_type_annotations(param1: int) -> bool:
+    return isinstance(param1, int)
+
+class ExampleError(Exception):
+    def __init__(self, msg: str):
+        self.msg = msg
+```
+
+### Output Example
+```python
+{example}
+```
+'''
+
+# https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
+
+PYTHON_DOCSTRING_EXAMPLE_GOOGLE = '''
+def function_with_pep484_type_annotations(param1: int) -> bool:
+    """Example function with PEP 484 type annotations.
+
+    Extended description of function.
+
+    Args:
+        param1: The first parameter.
+
+    Returns:
+        The return value. True for success, False otherwise.
+    """
+    ...
+
+class ExampleError(Exception):
+    """Exceptions are documented in the same way as classes.
+
+    The __init__ method was documented in the class level docstring.
+
+    Args:
+        msg: Human readable string describing the exception.
+
+    Attributes:
+        msg: Human readable string describing the exception.
+    """
+    ...
+'''
+
+PYTHON_DOCSTRING_EXAMPLE_NUMPY = '''
+def function_with_pep484_type_annotations(param1: int) -> bool:
+    """
+    Example function with PEP 484 type annotations.
+
+    Extended description of function.
+
+    Parameters
+    ----------
+    param1
+        The first parameter.
+
+    Returns
+    -------
+    bool
+        The return value. True for success, False otherwise.
+    """
+    ...
+
+class ExampleError(Exception):
+    """
+    Exceptions are documented in the same way as classes.
+
+    The __init__ method was documented in the class level docstring.
+
+    Parameters
+    ----------
+    msg
+        Human readable string describing the exception.
+
+    Attributes
+    ----------
+    msg
+        Human readable string describing the exception.
+    """
+    ...
+'''
+
+PYTHON_DOCSTRING_EXAMPLE_SPHINX = '''
+def function_with_pep484_type_annotations(param1: int) -> bool:
+    """Example function with PEP 484 type annotations.
+
+    Extended description of function.
+
+    :param param1: The first parameter.
+    :type param1: int
+
+    :return: The return value. True for success, False otherwise.
+    :rtype: bool
+    """
+    ...
+
+class ExampleError(Exception):
+    """Exceptions are documented in the same way as classes.
+
+    The __init__ method was documented in the class level docstring.
+
+    :param msg: Human-readable string describing the exception.
+    :type msg: str
+    """
+    ...
+'''
