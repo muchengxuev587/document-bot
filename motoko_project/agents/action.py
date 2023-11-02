@@ -1,14 +1,15 @@
 import re
+import os
 import time
 
 import motoko_project.utils as U
-from javascript import require
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import SystemMessagePromptTemplate
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 
 from motoko_project.prompts import load_prompt
 from motoko_project.control_primitives_context import load_control_primitives_context
+from motoko_project.const import CKPT_DIR, PROJECT_ROOT, WORKSPACE_ROOT
 
 class ActionAgent:
     def __init__(
@@ -24,19 +25,21 @@ class ActionAgent:
         self.ckpt_dir = ckpt_dir
         self.chat_log = chat_log
         self.execution_error = execution_error
-        U.f_mkdir(f"{ckpt_dir}/action")
+        # U.f_mkdir(f"{ckpt_dir}/action")
         if resume:
             print(f"\033[32mLoading Action Agent from {ckpt_dir}/action\033[0m")
-        else:
-            self.chest_memory = {}
+
         self.llm = ChatOpenAI(
             model_name=model_name,
             temperature=temperature,
             request_timeout=request_timout,
+            openai_api_key= os.environ["OPENAI_API_KEY"],
+            openai_api_base= os.environ["OPENAI_API_BASE"]
+            
         )
 
     def render_system_message(self, skills=[]):
-        system_template = load_prompt("action_template")
+        system_template = load_prompt("dbot_action_template")
         # FIXME: Hardcoded control_primitives
         base_skills = [
             # open pdf file with pdfplumber 
@@ -56,20 +59,19 @@ class ActionAgent:
     def render_human_message(
         self, *, events, code="", task="", context="", critique=""
     ):
-        chat_messages = []
         error_messages = []
-      
-        assert events[-1][0] == "observe", "Last event must be observe"
+        result_messages = []
+        
         for i, (event_type, event) in enumerate(events):
-            if event_type == "onChat":
-                chat_messages.append(event["onChat"])
-            elif event_type == "onError":
+
+            if event_type == "onError":
                 error_messages.append(event["onError"])
             elif event_type == "observe":
-                health = event["status"]["health"]
-                position = event["status"]["position"]
-                inventory = event["inventory"]
-                assert i == len(events) - 1, "observe must be the last event"
+                health = event["health"]
+                position = event["position"]
+                result = event['result'][0]
+                result_messages.append(result)
+              
 
         observation = ""
 
@@ -85,22 +87,13 @@ class ActionAgent:
             else:
                 observation += f"Execution error: No error\n\n"
 
-        if self.chat_log:
-            if chat_messages:
-                chat_log = "\n".join(chat_messages)
-                observation += f"Chat log: {chat_log}\n\n"
-            else:
-                observation += f"Chat log: None\n\n"
-
-        observation += f"Health: {health:.1f}/20\n\n"
-
-        observation += f"Position: x={position['x']:.1f}, y={position['y']:.1f}, z={position['z']:.1f}\n\n"
-
-        if not (
-            task == "Place and deposit useless items into a chest"
-            or task.startswith("Deposit useless items into the chest at")
-        ):
-            observation += self.render_chest_observation()
+        
+        if result:
+            observation += f"Result from the last round::\n{result}\n\n"
+        else:
+            observation += f"Result from the last round:: No error\n\n"
+                
+        observation += f"Position: {position}\n\n"
 
         observation += f"Task: {task}\n\n"
 
@@ -125,7 +118,7 @@ class ActionAgent:
             try:
                 code_pattern = rf"```{lang}.*?\s+(.*?)```"
                 
-                match = re.search(code_pattern, message, re.DOTALL)
+                match = re.search(code_pattern, message.content, re.DOTALL)
                 if match:
                     code = match.group(1)
                 else:
@@ -135,6 +128,7 @@ class ActionAgent:
                 # raise Exception            
                 parsed = code
                 functions = []
+                
             #     assert (
             #         main_function is not None
             #     ), "No async function found. Your main function must be async."
@@ -149,6 +143,7 @@ class ActionAgent:
             #         "program_name": main_function["name"],
             #         "exec_code": exec_code,
             #     }
+                return { "program_code": parsed }
             except Exception as e:
                 retry -= 1
                 error = e

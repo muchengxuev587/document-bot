@@ -18,6 +18,7 @@ def get_project_root():
 
 
 PROJECT_ROOT = get_project_root()
+
 DATA_PATH = PROJECT_ROOT / "data"
 WORKSPACE_ROOT = PROJECT_ROOT / "workspace"
 PROMPT_PATH = PROJECT_ROOT / "metagpt/prompts"
@@ -34,5 +35,7 @@ SKILL_DIRECTORY = PROJECT_ROOT / "metagpt/skills"
 MEM_TTL = 24 * 30 * 3600
 
 ### document_bot ###
-CKPT_DIR = PROJECT_ROOT / "/ckpt"
+CKPT_DIR = PROJECT_ROOT / "ckpt"
 LOG_DIR = PROJECT_ROOT / "logs"
+
+print('project_root:', PROJECT_ROOT)

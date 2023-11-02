@@ -4,7 +4,7 @@ import motoko_project.utils as U
 
 
 def load_control_primitives_context(primitive_names=None):
-    package_path = pkg_resources.resource_filename("motoko", "")
+    package_path = pkg_resources.resource_filename("motoko_project", "")
     if primitive_names is None:
         primitive_names = [
             primitive[:-3]

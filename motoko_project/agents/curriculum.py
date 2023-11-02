@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import random
 import re
-
+import os
 import motoko_project.utils as U
 from motoko_project.prompts import load_prompt
 from motoko_project.utils.json_utils import fix_and_parse_json
@@ -10,6 +10,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.schema import HumanMessage, SystemMessage
 from langchain.vectorstores import Chroma
+from motoko_project.const import CKPT_DIR, PROJECT_ROOT, WORKSPACE_ROOT
 
 class CurriculumAgent:
     def __init__(
@@ -23,17 +24,20 @@ class CurriculumAgent:
         resume=False,
         mode="manual",
         warm_up=None,
-        core_inventory_items: str | None = None,
     ):
         self.llm = ChatOpenAI(
             model_name=model_name,
             temperature=temperature,
             request_timeout=request_timout,
+            openai_api_key= os.environ["OPENAI_API_KEY"],
+            openai_api_base= os.environ["OPENAI_API_BASE"]
         )
         self.qa_llm = ChatOpenAI(
             model_name=qa_model_name,
             temperature=qa_temperature,
             request_timeout=request_timout,
+            openai_api_key= os.environ["OPENAI_API_KEY"],
+            openai_api_base= os.environ["OPENAI_API_BASE"]
         )
         assert mode in [
             "auto",
@@ -72,18 +76,10 @@ class CurriculumAgent:
         if not warm_up:
             warm_up = self.default_warmup
         self.warm_up = {}
-        if "optional_inventory_items" in warm_up:
-            assert core_inventory_items is not None
-            self._core_inv_items_regex = re.compile(core_inventory_items)
-            self.warm_up["optional_inventory_items"] = warm_up[
-                "optional_inventory_items"
-            ]
-        else:
-            self.warm_up["optional_inventory_items"] = 0
+       
         for key in self.curriculum_observations:
             self.warm_up[key] = warm_up.get(key, self.default_warmup[key])
-        self.warm_up["nearby_blocks"] = 0
-        self.warm_up["inventory"] = 0
+
         self.warm_up["completed_tasks"] = 0
         self.warm_up["failed_tasks"] = 0
 
@@ -91,11 +87,9 @@ class CurriculumAgent:
     def default_warmup(self):
         return {
             "context": 5,
-            "health": 15,
-            "position": 0,
-            "inventory": 0,  # perhaps a bookself for a document_bot
-            "completed_tasks": 0,
-            "failed_tasks": 0,
+            "health": 25,
+            "completed_tasks": 5,
+            "failed_tasks": 5,
         }
 
     @property
@@ -103,8 +97,6 @@ class CurriculumAgent:
         return [
             "context",
             "health",
-            "position",
-            "inventory",
             "completed_tasks",
             "failed_tasks",
         ]
@@ -119,29 +111,20 @@ class CurriculumAgent:
         return system_message
 
     def render_observation(self, *, events):
-        assert events[-1][0] == "observe", "Last event must be observe"
+      
         event = events[-1][1]
-        health = event["status"]["health"]
-        position = event["status"]["position"]
-        inventory = event["inventory"]
+        health = event["health"]
+        position = event["position"]
         
         completed_tasks = (
             ", ".join(self.completed_tasks) if self.completed_tasks else "None"
         )
         failed_tasks = ", ".join(self.failed_tasks) if self.failed_tasks else "None"
 
-        # filter out optional inventory items if required
-        if self.progress < self.warm_up["optional_inventory_items"]:
-            inventory = {
-                k: v
-                for k, v in inventory.items()
-                if self._core_inv_items_regex.search(k) is not None
-            }
-
         observation = {
             "context": "",
-            "health": f"Health: {health:.1f}/20\n\n",
-            "position": f"Position: x={position['x']:.1f}, y={position['y']:.1f}, z={position['z']:.1f}\n\n",
+            "health": f"Health: {health:.1f}\n\n",
+            "position": f"Current directory: {position}\n",
             "completed_tasks": f"Completed tasks so far: {completed_tasks}\n\n",
             "failed_tasks": f"Failed tasks that are too hard: {failed_tasks}\n\n",
         }
@@ -166,14 +149,14 @@ class CurriculumAgent:
                 if i > 5:
                     break
 
-        for key in self.curriculum_observations:
-            if self.progress >= self.warm_up[key]:
-                if self.warm_up[key] != 0:
-                    should_include = random.random() < 0.8
-                else:
-                    should_include = True
-                if should_include:
-                    content += observation[key]
+        # for key in self.curriculum_observations:
+        #     if self.progress >= self.warm_up[key]:
+        #         if self.warm_up[key] != 0:
+        #             should_include = random.random() < 0.8
+        #         else:
+        #             should_include = True
+        #         if should_include:
+        #             content += observation[key]
 
         print(f"\033[35m****Curriculum Agent human message****\n{content}\033[0m")
         return HumanMessage(content=content)
@@ -229,9 +212,10 @@ class CurriculumAgent:
         while not confirmed:
             task = input("Enter task: ")
             context = input("Enter context: ")
-            print(f"Task: {task}\nContext: {context}")
+            ws_dir = input("Enter workspace name: ")
+            print(f"Task: {task}\nContext: {context}\nWorkspace: {WORKSPACE_ROOT}/{ws_dir}")
             confirmed = input("Confirm? (y/n)").lower() in ["y", ""]
-        return task, context
+        return task, context, ws_dir
 
     def update_exploration_progress(self, info):
         task = info["task"]

@@ -24,6 +24,8 @@ class SkillManager:
             model_name=model_name,
             temperature=temperature,
             request_timeout=request_timout,
+            openai_api_key= os.environ["OPENAI_API_KEY"],
+            openai_api_base= os.environ["OPENAI_API_BASE"]
         )
         U.f_mkdir(f"{ckpt_dir}/skill/code")
         U.f_mkdir(f"{ckpt_dir}/skill/description")

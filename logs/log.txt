@@ -1,0 +1,195 @@
+2023-10-26 13:56:31.240 | INFO     | motoko_project.env.bridge_m:run:67 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 15:07:59.426 | INFO     | motoko_project.env.bridge_m:run:67 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 15:11:45.423 | INFO     | motoko_project.env.bridge_m:run:67 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 18:45:11.449 | INFO     | motoko_project.env.bridge_m:run:68 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 19:00:33.035 | INFO     | motoko_project.env.bridge_m:run:68 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 19:05:04.471 | INFO     | motoko_project.env.bridge_m:run:68 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 19:09:09.890 | INFO     | motoko_project.env.bridge_m:run:68 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 19:18:32.031 | INFO     | motoko_project.env.bridge_m:run:68 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 20:04:19.430 | INFO     | motoko_project.env.bridge_m:run:68 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 22:54:36.097 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 22:55:24.007 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 22:55:47.756 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-26 22:56:13.653 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 08:57:15.541 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 08:58:36.554 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:00:08.281 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:03:01.221 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:33:41.534 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:33:55.389 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:49:24.332 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:49:39.663 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:57:42.534 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 09:58:17.489 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 15:42:19.062 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 15:48:13.174 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 16:42:24.378 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 16:42:43.650 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:12:13.948 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:13:53.104 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:15:41.792 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:15:46.808 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:15:53.963 | INFO     | motoko_project.motoko:step:188 - conversation history updated
+2023-10-27 17:17:41.322 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:17:46.664 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:18:10.150 | INFO     | motoko_project.motoko:step:190 - Code parsing from ai message succeed
+2023-10-27 17:46:14.318 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:46:25.587 | INFO     | motoko_project.env.bridge_m:run:69 - Running python /home/bsz/data/chatglm/document_agent/workspace/
+2023-10-27 17:46:37.299 | INFO     | motoko_project.motoko:step:189 - Code parsing from ai message succeed
+2023-10-27 17:54:32.788 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 17:54:39.346 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 17:55:09.976 | INFO     | motoko_project.motoko:step:189 - Code parsing from ai message succeed
+2023-10-27 17:56:44.313 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 17:56:44.314 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 17:56:55.249 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 17:56:55.249 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 17:57:14.876 | INFO     | motoko_project.motoko:step:189 - Code parsing from ai message succeed
+2023-10-27 18:03:02.644 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:03:02.645 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:03:08.437 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:03:08.438 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:05:59.408 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:05:59.409 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:06:03.994 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:06:03.995 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:06:10.088 | INFO     | motoko_project.motoko:step:190 - Code parsing from ai message succeed
+2023-10-27 18:09:46.600 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:09:46.601 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:09:57.346 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:09:57.347 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:10:06.548 | INFO     | motoko_project.motoko:step:190 - Code parsing from ai message succeed
+2023-10-27 18:16:59.219 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:16:59.220 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:18:32.212 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:18:32.213 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:19:59.069 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:19:59.070 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:20:04.750 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:20:04.750 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:20:10.745 | INFO     | motoko_project.motoko:step:190 - Code parsing from ai message succeed
+2023-10-27 18:20:10.745 | INFO     | motoko_project.motoko:step:193 - parsed_result is a dict
+2023-10-27 18:20:10.745 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\ndef search_text_files(directory):\n    text_files = []\n    for item in os.listdir(directory):\n        item_path = os.path.join(directory, item)\n        if os.path.isfile(item_path) and item.endswith(".txt"):\n            text_files.append(item_path)\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:20:10.746 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+def search_text_files(directory):
+    text_files = []
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isfile(item_path) and item.endswith(".txt"):
+            text_files.append(item_path)
+    return text_files
+
+
+2023-10-27 18:20:10.750 | INFO     | motoko_project.motoko:step:198 - running main recording for events
+2023-10-27 18:23:32.987 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:23:32.987 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:23:40.758 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:23:40.758 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:23:47.067 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\ndef search_text_files(directory):\n    text_files = []\n    for item in os.listdir(directory):\n        item_path = os.path.join(directory, item)\n        if os.path.isfile(item_path) and item.endswith(".txt"):\n            text_files.append(item_path)\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:23:47.068 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+def search_text_files(directory):
+    text_files = []
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isfile(item_path) and item.endswith(".txt"):
+            text_files.append(item_path)
+    return text_files
+
+
+2023-10-27 18:24:26.678 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:24:26.678 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:24:33.593 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:24:33.594 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:24:39.717 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\ndef search_text_files(directory):\n    text_files = []\n    for item in os.listdir(directory):\n        item_path = os.path.join(directory, item)\n        if os.path.isfile(item_path) and item.endswith(".txt"):\n            text_files.append(item_path)\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:24:39.718 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+def search_text_files(directory):
+    text_files = []
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isfile(item_path) and item.endswith(".txt"):
+            text_files.append(item_path)
+    return text_files
+
+
+2023-10-27 18:33:52.078 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:33:52.078 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:34:04.417 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:34:04.418 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:34:10.270 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\nasync def search_text_files(filepath):\n    parent_folder = os.path.dirname(filepath)\n    files = os.listdir(parent_folder)\n    text_files = [file for file in files if file.endswith(".txt")]\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:34:10.271 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+async def search_text_files(filepath):
+    parent_folder = os.path.dirname(filepath)
+    files = os.listdir(parent_folder)
+    text_files = [file for file in files if file.endswith(".txt")]
+    return text_files
+
+
+2023-10-27 18:40:29.601 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:40:29.602 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:40:33.518 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:40:33.519 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:40:38.783 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\nasync def search_text_files(filepath):\n    parent_folder = os.path.dirname(filepath)\n    files = os.listdir(parent_folder)\n    text_files = [file for file in files if file.endswith(".txt")]\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:40:38.785 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+async def search_text_files(filepath):
+    parent_folder = os.path.dirname(filepath)
+    files = os.listdir(parent_folder)
+    text_files = [file for file in files if file.endswith(".txt")]
+    return text_files
+
+
+2023-10-27 18:43:37.795 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:43:37.796 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:43:47.006 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-27 18:43:47.007 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-27 18:43:52.235 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\nasync def search_text_files(filepath):\n    parent_folder = os.path.dirname(filepath)\n    files = os.listdir(parent_folder)\n    text_files = [file for file in files if file.endswith(".txt")]\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:43:52.237 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+async def search_text_files(filepath):
+    parent_folder = os.path.dirname(filepath)
+    files = os.listdir(parent_folder)
+    text_files = [file for file in files if file.endswith(".txt")]
+    return text_files
+
+
+2023-10-27 18:44:13.595 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\nasync def search_text_files(filepath):\n    parent_folder = os.path.dirname(filepath)\n    files = os.listdir(parent_folder)\n    text_files = [file for file in files if file.endswith(".txt")]\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-27 18:44:13.596 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+async def search_text_files(filepath):
+    parent_folder = os.path.dirname(filepath)
+    files = os.listdir(parent_folder)
+    text_files = [file for file in files if file.endswith(".txt")]
+    return text_files
+
+
+2023-10-30 10:03:16.430 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-30 10:03:16.430 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-30 10:03:27.945 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-10-30 10:03:27.946 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-10-30 10:03:32.996 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\ndef search_text_files(directory):\n    text_files = []\n    for item in os.listdir(directory):\n        item_path = os.path.join(directory, item)\n        if os.path.isfile(item_path) and item.endswith(".txt"):\n            text_files.append(item_path)\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-30 10:03:32.997 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+def search_text_files(directory):
+    text_files = []
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isfile(item_path) and item.endswith(".txt"):
+            text_files.append(item_path)
+    return text_files
+
+
+2023-10-30 10:03:45.410 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\ndef search_text_files(directory):\n    text_files = []\n    for item in os.listdir(directory):\n        item_path = os.path.join(directory, item)\n        if os.path.isfile(item_path) and item.endswith(".txt"):\n            text_files.append(item_path)\n    return text_files\n\n', 'code_file_name': ''})
+2023-10-30 10:03:45.412 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+def search_text_files(directory):
+    text_files = []
+    for item in os.listdir(directory):
+        item_path = os.path.join(directory, item)
+        if os.path.isfile(item_path) and item.endswith(".txt"):
+            text_files.append(item_path)
+    return text_files
+
+

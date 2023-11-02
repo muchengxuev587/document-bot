@@ -4,12 +4,12 @@ Plan:
 2) ...
 3) ...
 ...
-Code:
-```javascript
+Code: 
+```python
 // helper functions (only if needed, try to avoid them)
 ...
 // main function after the helper functions
-async function yourMainFunctionName(bot) {
+async def yourMainFunctionName(filepath):
   // ...
-}
+
 ```

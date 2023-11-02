@@ -6,12 +6,13 @@ from typing import Dict
 
 import motoko_project.utils as U
 from .env import MotokoEnv
+from motoko_project.env.env_logs import logger
 
 from .agents import ActionAgent
 from .agents import CriticAgent
 from .agents import CurriculumAgent
 from .agents import SkillManager
-
+from motoko_project.const import CKPT_DIR, PROJECT_ROOT, WORKSPACE_ROOT
 
 # TODO: remove event memory
 class Motoko:
@@ -20,9 +21,8 @@ class Motoko:
         openai_api_key: str = None,
         openai_base: str = None,
         env_wait_ticks: int = 20,
-        env_request_timeout: int = 600,
         max_iterations: int = 160,
-        action_agent_model_name: str = "gpt-4",
+        action_agent_model_name: str = "gpt-3.5-turbo",
         action_agent_temperature: float = 0,
         action_agent_task_max_retries: int = 4,
         action_agent_show_chat_log: bool = True,
@@ -32,10 +32,10 @@ class Motoko:
         curriculum_agent_qa_model_name: str = "gpt-3.5-turbo",
         curriculum_agent_qa_temperature: float = 0,
         curriculum_agent_warm_up: Dict[str, int] = None,
-        curriculum_agent_mode: str = "auto",
+        curriculum_agent_mode: str = "manual",  #auto will be better
         critic_agent_model_name: str = "gpt-4",
         critic_agent_temperature: float = 0,
-        critic_agent_mode: str = "auto",
+        critic_agent_mode: str = "manual",  #auto will be better
         skill_manager_model_name: str = "gpt-3.5-turbo",
         skill_manager_temperature: float = 0,
         skill_manager_retrieval_top_k: int = 5,
@@ -106,6 +106,7 @@ class Motoko:
             resume=resume,
             chat_log=action_agent_show_chat_log,
             execution_error=action_agent_show_execution_error,
+
         )
         self.action_agent_task_max_retries = action_agent_task_max_retries
         
@@ -119,6 +120,7 @@ class Motoko:
             resume=resume,
             mode=curriculum_agent_mode,
             warm_up=curriculum_agent_warm_up,
+ #auto is much better
         )
         self.critic_agent = CriticAgent(
             model_name=critic_agent_model_name,
@@ -145,7 +147,7 @@ class Motoko:
         self.conversations = []
         self.last_events = None
 
-    def reset(self, task, context="", reset_env=True):
+    def reset(self, task, context="", reset_env=False):
         self.action_agent_rollout_num_iter = 0
         self.task = task
         self.context = context
@@ -153,7 +155,8 @@ class Motoko:
             self.env.reset()
 
         # step to peek an observation
-        events = self.env.step("")
+        empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
+        events = self.env.step(empty_msg)
         
         skills = self.skill_manager.retrieve_skills(query=self.context)
         print(
@@ -182,43 +185,27 @@ class Motoko:
         self.conversations.append(
             (self.messages[0].content, self.messages[1].content, ai_message.content)
         )
-        parsed_result = self.action_agent.process_ai_message(message=ai_message)
+        parsed_result = self.action_agent.process_ai_message(message=ai_message, lang='python')
         success = False
+    
         if isinstance(parsed_result, dict):
-            code = parsed_result["program_code"] + "\n" + parsed_result["exec_code"]
-            events = self.env.step(
-                code,
-                programs=self.skill_manager.programs,
-            )
+            code = parsed_result["program_code"] + "\n"
+            msg = ((),{'mode': "text", "code":code, 'code_file_name':''})
+            events = self.env.step(msg)
             self.recorder.record(events, self.task)
             success, critique = self.critic_agent.check_task_success(
                 events=events,
                 task=self.task,
                 context=self.context,
+                output = events[-1][1]['result'],
                 max_retries=5,
             )
 
-            if self.reset_placed_if_failed and not success:
-                # revert all the placing event in the last step
-                blocks = []
-                positions = []
-                for event_type, event in events:
-                    if event_type == "onSave" and event["onSave"].endswith("_placed"):
-                        block = event["onSave"].split("_placed")[0]
-                        position = event["status"]["position"]
-                        blocks.append(block)
-                        positions.append(position)
-                new_events = self.env.step(
-                    f"await givePlacedItemBack(bot, {U.json_dumps(blocks)}, {U.json_dumps(positions)})",
-                    programs=self.skill_manager.programs,
-                )
-                events[-1][1]["inventory"] = new_events[-1][1]["inventory"]
-                events[-1][1]["voxels"] = new_events[-1][1]["voxels"]
             new_skills = self.skill_manager.retrieve_skills(
                 query=self.context
                 + "\n\n"
-                + self.action_agent.summarize_chatlog(events)
             )
+            
             system_message = self.action_agent.render_system_message(skills=new_skills)
             human_message = self.action_agent.render_human_message(
                 events=events,
@@ -258,6 +245,8 @@ class Motoko:
 
     def rollout(self, *, task, context, reset_env=True):
         self.reset(task=task, context=context, reset_env=reset_env)
+        print(f"\033[41m reset succeed \033[0m")
+        
         while True:
             messages, reward, done, info = self.step()
             if done:
@@ -265,27 +254,25 @@ class Motoko:
         return messages, reward, done, info
 
     def learn(self, reset_env=True):
-        if self.resume:
-            # keep the inventory
-            self.env.reset()
-        else:
-            # clear the inventory
-            self.env.reset()
-            self.resume = True
-        self.last_events = self.env.step("")
+        
+        empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
+        # peek an observation to start learning process for curriculum agent
+        self.last_events = self.env.step(empty_msg)
 
         while True:
             if self.recorder.iteration > self.max_iterations:
                 print("Iteration limit reached")
                 break
-            task, context = self.curriculum_agent.propose_next_task(
+            task, context, ws_dir = self.curriculum_agent.propose_next_task(
                 events=self.last_events,
                 max_retries=5,
+
             )
             print(
                 f"\033[35mStarting task {task} for at most {self.action_agent_task_max_retries} times\033[0m"
             )
             try:
+                os.makedirs(f"{WORKSPACE_ROOT}/{ws_dir}", exist_ok=True)
                 messages, reward, done, info = self.rollout(
                     task=task,
                     context=context,
@@ -298,7 +285,9 @@ class Motoko:
                     "success": False,
                 }
                 # reset bot status here
-                self.last_events = self.env.reset()
+                empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
+                self.last_events = self.env.step(empty_msg)
+        # peek an observation to start learning process for curriculum agent
                 # use red color background to print the error
                 print("Your last round rollout terminated due to error:")
                 print(f"\033[41m{e}\033[0m")

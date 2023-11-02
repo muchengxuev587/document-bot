@@ -12,13 +12,6 @@ class EventRecorder:
         init_position=None,
     ):
         self.ckpt_dir = ckpt_dir
-        self.item_history = set()
-        self.item_vs_time = {}
-        self.item_vs_iter = {}
-        self.biome_history = set()
-        self.init_position = init_position
-        self.position_history = [[0, 0]]
-        self.elapsed_time = 0
         self.iteration = 0
         f_mkdir(self.ckpt_dir, "events")
         if resume:
@@ -30,19 +23,6 @@ class EventRecorder:
             "_%Y%m%d_%H%M%S", time.localtime()
         )
         self.iteration += 1
-        if not self.init_position:
-            self.init_position = [
-                events[0][1]["status"]["position"]["x"],
-                events[0][1]["status"]["position"]["z"],
-            ]
-        for event_type, event in events:
-            self.update_items(event)
-            if event_type == "observe":
-                self.update_elapsed_time(event)
-        print(
-            f"\033[96m****Recorder message: {self.elapsed_time} ticks have elapsed****\033[0m\n"
-            f"\033[96m****Recorder message: {self.iteration} iteration passed****\033[0m"
-        )
         dump_json(events, f_join(self.ckpt_dir, "events", task))
 
     def resume(self, cutoff=None):
