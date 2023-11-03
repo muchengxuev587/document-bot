@@ -190,7 +190,11 @@ class Motoko:
     
         if isinstance(parsed_result, dict):
             code = parsed_result["program_code"] + "\n"
-            msg = ((),{'mode': "text", "code":code, 'code_file_name':''})
+            main_fn = parsed_result["program_name"]
+            test_fp = parsed_result["test_file"]
+            exec_code = parsed_result["exec_code"]
+            
+            msg = ((),{'mode': "text", "code": code+exec_code, 'code_file_name':''})
             events = self.env.step(msg)
             self.recorder.record(events, self.task)
             success, critique = self.critic_agent.check_task_success(
@@ -200,7 +204,6 @@ class Motoko:
                 output = events[-1][1]['result'],
                 max_retries=5,
             )
-
             # should implement delete test file here
             # {
                 

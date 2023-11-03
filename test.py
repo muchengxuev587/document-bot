@@ -42,3 +42,7 @@ def bar():
 function_names = extract_function_names(code)
 print(function_names)
 
+file_path = 'dafafs.etxt'
+file_type=('pdf','txt')
+if file_path.endswith(file_type):
+    print(file_path)

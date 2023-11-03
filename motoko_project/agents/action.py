@@ -110,6 +110,17 @@ class ActionAgent:
 
         return HumanMessage(content=observation)
 
+    def find_test_file(self, file_type=('pdf')) -> str:
+        search_folder = WORKSPACE_ROOT
+        path_list = []
+    
+        for root, dirs, files in os.walk(search_folder):
+            for file in files:
+               if file.endswith(file_type):
+                   path_list.append(os.path.join(root, file))
+
+        return path_list
+    
     def process_ai_message(self, message, lang: str=""):
         assert isinstance(message, AIMessage)
 
@@ -118,7 +129,6 @@ class ActionAgent:
         while retry > 0:
             try:
                 code_pattern = rf"```{lang}.*?\s+(.*?)```"
-                
                 match = re.search(code_pattern, message.content, re.DOTALL)
                 if match:
                     code = match.group(1)
@@ -133,8 +143,19 @@ class ActionAgent:
                 for node in ast.walk(tree):
                     if isinstance(node, ast.FunctionDef):
                         function_names.append(node.name)
+                main_function = function_names[-1]
                 
-                return { "program_code": parsed, "program_name": function_names[-1] }
+                file_path_list = self.find_test_file(file_type=('pdf'))
+                if len(file_path_list) > 0 :
+                    file_path = file_path_list[0]
+                    exec_code = f"{main_function}(file_path={str(file_path)});"
+                else:
+                    print(f"can't find text file in {WORKSPACE_ROOT}:")
+                return { "program_code": parsed, 
+                         "program_name": main_function,
+                         "test_file": file_path, 
+                         "exec_code": exec_code,}
+            
             except Exception as e:
                 retry -= 1
                 error = e
@@ -142,25 +163,7 @@ class ActionAgent:
         return f"Error parsing action response (before program execution): {error}"
 
     def summarize_chatlog(self, events):
-        def filter_item(message: str):
-            craft_pattern = r"I cannot make \w+ because I need: (.*)"
-            craft_pattern2 = (
-                r"I cannot make \w+ because there is no crafting table nearby"
-            )
-            mine_pattern = r"I need at least a (.*) to mine \w+!"
-            if re.match(craft_pattern, message):
-                return re.match(craft_pattern, message).groups()[0]
-            elif re.match(craft_pattern2, message):
-                return "a nearby crafting table"
-            elif re.match(mine_pattern, message):
-                return re.match(mine_pattern, message).groups()[0]
-            else:
-                return ""
-
-        chatlog = set()
-        for event_type, event in events:
-            if event_type == "onChat":
-                item = filter_item(event["onChat"])
-                if item:
-                    chatlog.add(item)
-        return "I also need " + ", ".join(chatlog) + "." if chatlog else ""
+        # a function of receiving information from env can be arranged here
+        return None
+    
+                        

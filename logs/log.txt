@@ -221,3 +221,33 @@ async def search_text_files(filepath):
 
 2023-11-02 14:37:24.310 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
 2023-11-02 14:37:24.311 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:20:16.629 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:20:16.629 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:20:34.803 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:20:34.804 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:34:44.667 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:34:44.668 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:34:54.222 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:34:54.223 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:39:09.418 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:39:09.419 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:39:30.677 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:39:30.678 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:52:05.836 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:52:05.837 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:52:47.016 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:52:47.017 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-03 17:53:01.481 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': "import pdfplumber\n\ndef read_pdf_first_sentence(filepath):\n    with pdfplumber.open(filepath) as pdf:\n        first_page = pdf.pages[0]\n        text = first_page.extract_text()\n        sentences = text.split('.')\n        first_sentence = sentences[0].strip()\n        return first_sentence\n\nread_pdf_first_sentence(/home/bsz/data/chatglm/document_agent/workspace/pdf_files/202303241400014000.pdf);", 'code_file_name': ''})
+2023-11-03 17:53:01.483 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import pdfplumber
+
+def read_pdf_first_sentence(filepath):
+    with pdfplumber.open(filepath) as pdf:
+        first_page = pdf.pages[0]
+        text = first_page.extract_text()
+        sentences = text.split('.')
+        first_sentence = sentences[0].strip()
+        return first_sentence
+
+read_pdf_first_sentence(/home/bsz/data/chatglm/document_agent/workspace/pdf_files/202303241400014000.pdf);
+2023-11-03 17:53:03.489 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-03 17:53:03.490 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
