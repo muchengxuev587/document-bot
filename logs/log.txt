@@ -193,3 +193,31 @@ def search_text_files(directory):
     return text_files
 
 
+2023-11-02 14:32:57.929 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-02 14:34:55.696 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-02 14:34:55.696 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-02 14:35:44.608 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-02 14:35:44.609 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 
+2023-11-02 14:35:49.743 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import os\n\nasync def search_text_files(filepath):\n    parent_folder = os.path.dirname(filepath)\n    files = os.listdir(parent_folder)\n    text_files = [file for file in files if file.endswith(".txt")]\n    return text_files\n\n', 'code_file_name': ''})
+2023-11-02 14:35:49.744 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import os
+
+async def search_text_files(filepath):
+    parent_folder = os.path.dirname(filepath)
+    files = os.listdir(parent_folder)
+    text_files = [file for file in files if file.endswith(".txt")]
+    return text_files
+
+
+2023-11-02 14:36:49.939 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': 'import glob\nimport os\n\nasync def search_text_files(filepath):\n    parent_folder = os.path.dirname(filepath)\n    text_files = glob.glob(os.path.join(parent_folder, "*.txt"))\n    pdf_files = glob.glob(os.path.join(parent_folder, "*.pdf"))\n    return text_files, pdf_files\n\n', 'code_file_name': ''})
+2023-11-02 14:36:49.940 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: import glob
+import os
+
+async def search_text_files(filepath):
+    parent_folder = os.path.dirname(filepath)
+    text_files = glob.glob(os.path.join(parent_folder, "*.txt"))
+    pdf_files = glob.glob(os.path.join(parent_folder, "*.pdf"))
+    return text_files, pdf_files
+
+
+2023-11-02 14:37:24.310 | INFO     | motoko_project.env.bridge_m:step:105 - Running python code from message: ((), {'mode': 'text', 'code': '', 'code_file_name': ''})
+2023-11-02 14:37:24.311 | INFO     | motoko_project.env.bridge_m:run:74 - Running python code: 

@@ -28,7 +28,7 @@ Code: Write code with triple quoto, based on the following list and context.
 8. Do not use public member functions that do not exist in your design.
 9. Functions in the "Code from the last round" section will not be saved or executed. Do not reuse functions listed there.
 10. Name your function in a meaningful way (can infer the task from the name).
-
+Progame_Name: Same name as your main function name (with .py suffix if the code is written in python)
 You should only respond in the format as described below:
 RESPONSE FORMAT:
 {response_format}

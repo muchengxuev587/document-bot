@@ -201,9 +201,18 @@ class Motoko:
                 max_retries=5,
             )
 
+            # should implement delete test file here
+            # {
+                
+            # }
+
+            # should include some feedback message so it can retrieve skills that is more suitable 
+            # such as "I need to do A to finish B, right now the context is not enough"
+            # the critique can be further decomposed into "you need to do ..."
             new_skills = self.skill_manager.retrieve_skills(
                 query=self.context
-                + "\n\n"
+                + "\n\n" 
+                + critique
             )
             
             system_message = self.action_agent.render_system_message(skills=new_skills)
@@ -245,7 +254,7 @@ class Motoko:
 
     def rollout(self, *, task, context, reset_env=True):
         self.reset(task=task, context=context, reset_env=reset_env)
-        print(f"\033[41m reset succeed \033[0m")
+        print(f"\033[41m Agent reset succeed, ready to try \033[0m")
         
         while True:
             messages, reward, done, info = self.step()
@@ -254,9 +263,9 @@ class Motoko:
         return messages, reward, done, info
 
     def learn(self, reset_env=True):
-        
-        empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
         # peek an observation to start learning process for curriculum agent
+        self.env.reset()
+        empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
         self.last_events = self.env.step(empty_msg)
 
         while True:
@@ -266,7 +275,6 @@ class Motoko:
             task, context, ws_dir = self.curriculum_agent.propose_next_task(
                 events=self.last_events,
                 max_retries=5,
-
             )
             print(
                 f"\033[35mStarting task {task} for at most {self.action_agent_task_max_retries} times\033[0m"

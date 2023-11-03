@@ -1,3 +1,4 @@
+import ast
 import re
 import os
 import time
@@ -127,23 +128,13 @@ class ActionAgent:
                 
                 # raise Exception            
                 parsed = code
-                functions = []
+                tree = ast.parse(code)
+                function_names = []
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.FunctionDef):
+                        function_names.append(node.name)
                 
-            #     assert (
-            #         main_function is not None
-            #     ), "No async function found. Your main function must be async."
-            #     assert (
-            #         len(main_function["params"]) == 1
-            #         and main_function["params"][0].name == "bot"
-            #     ), f"Main function {main_function['name']} must take a single argument named 'bot'"
-            #     program_code = "\n\n".join(function["body"] for function in functions)
-            #     exec_code = f"await {main_function['name']}(bot);"
-            #     return {
-            #         "program_code": program_code,
-            #         "program_name": main_function["name"],
-            #         "exec_code": exec_code,
-            #     }
-                return { "program_code": parsed }
+                return { "program_code": parsed, "program_name": function_names[-1] }
             except Exception as e:
                 retry -= 1
                 error = e
