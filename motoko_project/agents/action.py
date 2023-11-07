@@ -77,36 +77,36 @@ class ActionAgent:
         observation = ""
 
         if code:
-            observation += f"Code from the last round:\n{code}\n\n"
+            observation += f"Code from the last round:\n{code}\n"
         else:
             observation += f"Code from the last round: No code in the first round\n\n"
 
         if self.execution_error:
             if error_messages:
                 error = "\n".join(error_messages)
-                observation += f"Execution error:\n{error}\n\n"
+                observation += f"Execution error:\n{error}\n"
             else:
-                observation += f"Execution error: No error\n\n"
+                observation += f"Execution error: No error\n"
 
         
         if result:
-            observation += f"Result from the last round::\n{result}\n\n"
+            observation += f"Result from the last round::\n{result}\n"
         else:
-            observation += f"Result from the last round:: No error\n\n"
+            observation += f"Result from the last round:: No error\n"
                 
-        observation += f"Position: {position}\n\n"
+        observation += f"Position: {position}\n"
 
-        observation += f"Task: {task}\n\n"
+        observation += f"Task: {task}\n"
 
         if context:
-            observation += f"Context: {context}\n\n"
+            observation += f"Context: {context}\n"
         else:
-            observation += f"Context: None\n\n"
+            observation += f"Context: None\n"
 
         if critique:
-            observation += f"Critique: {critique}\n\n"
+            observation += f"Critique: {critique}\n"
         else:
-            observation += f"Critique: None\n\n"
+            observation += f"Critique: None\n"
 
         return HumanMessage(content=observation)
 
@@ -148,7 +148,7 @@ class ActionAgent:
                 file_path_list = self.find_test_file(file_type=('pdf'))
                 if len(file_path_list) > 0 :
                     file_path = file_path_list[0]
-                    exec_code = f"{main_function}(file_path={str(file_path)});"
+                    exec_code = f"""{main_function}(file_path="{str(file_path)}")"""
                 else:
                     print(f"can't find text file in {WORKSPACE_ROOT}:")
                 return { "program_code": parsed, 
@@ -160,6 +160,7 @@ class ActionAgent:
                 retry -= 1
                 error = e
                 time.sleep(1)
+                
         return f"Error parsing action response (before program execution): {error}"
 
     def summarize_chatlog(self, events):

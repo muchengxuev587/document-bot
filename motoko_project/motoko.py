@@ -120,7 +120,7 @@ class Motoko:
             resume=resume,
             mode=curriculum_agent_mode,
             warm_up=curriculum_agent_warm_up,
- #auto is much better
+        #auto is much better
         )
         self.critic_agent = CriticAgent(
             model_name=critic_agent_model_name,
@@ -157,31 +157,23 @@ class Motoko:
         # step to peek an observation
         empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
         events = self.env.step(empty_msg)
-        
         skills = self.skill_manager.retrieve_skills(query=self.context)
-        print(
-            f"\033[33mRender Action Agent system message with {len(skills)} skills\033[0m"
-        )
+        logger.info(f"\033[33mRender Action Agent system message with {len(skills)} skills\033[0m")
         system_message = self.action_agent.render_system_message(skills=skills)
         human_message = self.action_agent.render_human_message(
             events=events, code="", task=self.task, context=context, critique=""
         )
         self.messages = [system_message, human_message]
-        print(
-            f"\033[32m****Action Agent human message****\n{human_message.content}\033[0m"
-        )
+        logger.info(f"\033[32m\n****Action Agent human message****\n{human_message.content}\033[0m")
         assert len(self.messages) == 2
         self.conversations = []
         return self.messages
-
-    def close(self):
-        self.env.close()
 
     def step(self):
         if self.action_agent_rollout_num_iter < 0:
             raise ValueError("Agent must be reset before stepping")
         ai_message = self.action_agent.llm(self.messages)
-        print(f"\033[34m****Action Agent ai message****\n{ai_message.content}\033[0m")
+        logger.info(f"\033[34m\n****Action Agent ai message****\n{ai_message.content}\033[0m")
         self.conversations.append(
             (self.messages[0].content, self.messages[1].content, ai_message.content)
         )
@@ -194,24 +186,34 @@ class Motoko:
             test_fp = parsed_result["test_file"]
             exec_code = parsed_result["exec_code"]
             
-            msg = ((),{'mode': "text", "code": code+exec_code, 'code_file_name':''})
-            events = self.env.step(msg)
+            try:
+                msg = ((),{'mode': "text", "code": code+exec_code, 'code_file_name':''})
+                events = self.env.step(msg)
+            except Exception as env_e:
+                logger.info(f"Your code can't invoke the env in the right way due to error: \033[41m{env_e}\033[0m")
+    
             self.recorder.record(events, self.task)
-            success, critique = self.critic_agent.check_task_success(
-                events=events,
-                task=self.task,
-                context=self.context,
-                output = events[-1][1]['result'],
-                max_retries=5,
-            )
+            
+            try:
+                # logger.info(f"start to check task success on running {exec_code} with events {events}")
+                success, critique = self.critic_agent.check_task_success(
+                    events=events,
+                    task=self.task,
+                    context=self.context,
+                    output = events[-1][1]['result'],
+                    max_retries=5,
+                )
+            except Exception as c_err:
+                 logger.info(f"Your critic process failed due to error: \033[41m{c_err}\033[0m")
+                 success, critique = False, ''
             # should implement delete test file here
             # {
                 
             # }
-
             # should include some feedback message so it can retrieve skills that is more suitable 
             # such as "I need to do A to finish B, right now the context is not enough"
             # the critique can be further decomposed into "you need to do ..."
+            logger.info(f"start to retrieve skills based on critique as well")
             new_skills = self.skill_manager.retrieve_skills(
                 query=self.context
                 + "\n\n" 
@@ -231,7 +233,7 @@ class Motoko:
         else:
             assert isinstance(parsed_result, str)
             self.recorder.record([], self.task)
-            print(f"\033[34m{parsed_result} Trying again!\033[0m")
+            logger.info(f"\033[34m{parsed_result} Trying again!\033[0m")
         assert len(self.messages) == 2
         self.action_agent_rollout_num_iter += 1
         done = (
@@ -250,70 +252,64 @@ class Motoko:
             info["program_code"] = parsed_result["program_code"]
             info["program_name"] = parsed_result["program_name"]
         else:
-            print(
-                f"\033[32m****Action Agent human message****\n{self.messages[-1].content}\033[0m"
-            )
+            logger.info( f"\033[32m\n****Action Agent human message****\n{self.messages[-1].content}\033[0m")
         return self.messages, 0, done, info
 
-    def rollout(self, *, task, context, reset_env=True):
+    def rollout(self, *, task, context, reset_env=False):
         self.reset(task=task, context=context, reset_env=reset_env)
-        print(f"\033[41m Agent reset succeed, ready to try \033[0m")
-        
+        # logger.info(f"\033[41m Agent reset succeed, ready to try \033[0m")
         while True:
             messages, reward, done, info = self.step()
             if done:
                 break
         return messages, reward, done, info
 
-    def learn(self, reset_env=True):
+    def learn(self, reset_env=False):
         # peek an observation to start learning process for curriculum agent
-        self.env.reset()
+        _, basic_info = self.env.reset()
+        logger.info(f"current command line position:{basic_info['position'][0]}\ncurrent conda env:{basic_info['conda info'][0]}")
         empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
         self.last_events = self.env.step(empty_msg)
 
         while True:
             if self.recorder.iteration > self.max_iterations:
-                print("Iteration limit reached")
+                logger.info("Iteration limit reached")
                 break
-            task, context, ws_dir = self.curriculum_agent.propose_next_task(
+            
+            # curriculum start
+            self.task, self.context = self.curriculum_agent.propose_next_task(
                 events=self.last_events,
                 max_retries=5,
             )
-            print(
-                f"\033[35mStarting task {task} for at most {self.action_agent_task_max_retries} times\033[0m"
-            )
+            
+            # action agent start 
+            logger.info(f"\033[35mStarting task {self.task} for at most {self.action_agent_task_max_retries} times\033[0m")
             try:
-                os.makedirs(f"{WORKSPACE_ROOT}/{ws_dir}", exist_ok=True)
                 messages, reward, done, info = self.rollout(
-                    task=task,
-                    context=context,
+                    task=self.task,
+                    context=self.context,
                     reset_env=reset_env,
                 )
             except Exception as e:
                 time.sleep(2)  # wait for program exit
                 info = {
-                    "task": task,
+                    "task": self.task,
                     "success": False,
                 }
                 # reset bot status here
                 empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
                 self.last_events = self.env.step(empty_msg)
-        # peek an observation to start learning process for curriculum agent
+                # peek an observation to start learning process for curriculum agent
                 # use red color background to print the error
-                print("Your last round rollout terminated due to error:")
-                print(f"\033[41m{e}\033[0m")
-
+                logger.info(f"Your last round rollout terminated due to error: \033[41m{e}\033[0m")
+            
+            # skill manager agent start   
             if info["success"]:
                 self.skill_manager.add_new_skill(info)
 
             self.curriculum_agent.update_exploration_progress(info)
-            print(
-                f"\033[35mCompleted tasks: {', '.join(self.curriculum_agent.completed_tasks)}\033[0m"
-            )
-            print(
-                f"\033[35mFailed tasks: {', '.join(self.curriculum_agent.failed_tasks)}\033[0m"
-            )
-
+            logger.info(f"\033[35mCompleted tasks: {', '.join(self.curriculum_agent.completed_tasks)}\033[0m")
+            logger.info(f"\033[35mFailed tasks: {', '.join(self.curriculum_agent.failed_tasks)}\033[0m")
         return {
             "completed_tasks": self.curriculum_agent.completed_tasks,
             "failed_tasks": self.curriculum_agent.failed_tasks,

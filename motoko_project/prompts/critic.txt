@@ -6,7 +6,7 @@ I will give you the following information:
 
 Task: The objective I need to accomplish.
 Action Output: The real output from running the action
-Context: The context of the task. Including the input information and desired output.
+Context: The context of the task. Including the input information and sometimes desired output.
 
 You should only respond in JSON format as described below:
 {

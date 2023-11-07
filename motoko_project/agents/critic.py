@@ -2,7 +2,7 @@ from motoko_project.prompts import load_prompt
 from motoko_project.utils.json_utils import fix_and_parse_json
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
-
+from motoko_project.env.env_logs import logger
 
 class CriticAgent:
     def __init__(
@@ -27,32 +27,30 @@ class CriticAgent:
     def render_human_message(self, *, events, task, context, output):
        
         # health = events[-1][1]["health"]
-        position = events[-1][1]["position"]
 
         for i, (event_type, event) in enumerate(events):
             if event_type == "onError":
-                print(f"\033[31mCritic Agent: Error occurs {event['onError']}\033[0m")
-                return None
+                logger.info(f"\033[31mCritic Agent: Error occurs on env-step {event['result'][1]}\033[0m")
+            
+        position = events[-1][1]["position"]
 
         observation = ""
-
         # observation += f"Health: {health:.1f}/20\n\n"
+        observation += f"Position: {position}\n"
 
-        observation += f"Position: {position}\n\n"
-
-        observation += f"Task: {task}\n\n"
+        observation += f"Task: {task}\n"
 
         if context:
-            observation += f"Context: {context}\n\n"
+            observation += f"Context: {context}\n"
         else:
-            observation += f"Context: None\n\n"
+            observation += f"Context: None\n"
         
         if output:
-            observation += f"Code running output: {output}\n\n"
+            observation += f"Code running output: {output}\n"
         else:
-            observation += f"last round output: None\n\n"
+            observation += f"last round output: None\n"
 
-        print(f"\033[31m****Critic Agent human message****\n{observation}\033[0m")
+        logger.info(f"\033[31m****Critic Agent human message****\n{observation}\033[0m")
         return HumanMessage(content=observation)
 
     def human_check_task_success(self):
@@ -93,13 +91,16 @@ class CriticAgent:
             )
 
     def check_task_success(self, *, events, task, context, output, max_retries=5):
-        human_message = self.render_human_message(
-            events=events,
-            task=task,
-            context=context,
-            output=output
-        )
-
+        
+        try:
+            human_message = self.render_human_message(
+                events=events,
+                task=task,
+                context=context,
+                output=output
+            )
+        except Exception as e:
+            logger.info(f"\033[31mCritic Agent: Error rendering human_message {e}\033[0m")
         messages = [
             self.render_system_message(),
             human_message,

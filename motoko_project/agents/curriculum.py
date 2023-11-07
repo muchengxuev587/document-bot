@@ -212,10 +212,9 @@ class CurriculumAgent:
         while not confirmed:
             task = input("Enter task: ")
             context = input("Enter context: ")
-            ws_dir = input("Enter workspace name: ")
-            print(f"Task: {task}\nContext: {context}\nWorkspace: {WORKSPACE_ROOT}/{ws_dir}")
+            print(f"Task: {task}\nContext: {context}\n")
             confirmed = input("Confirm? (y/n)").lower() in ["y", ""]
-        return task, context, ws_dir
+        return task, context
 
     def update_exploration_progress(self, info):
         task = info["task"]
