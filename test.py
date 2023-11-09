@@ -28,7 +28,7 @@ def check_page_num(filepath):
     return pdf_reader.numPages 
 
 #choose a file from local folder to check the result
-file_path = "/home/bsz/data/chatglm/document_agent/ckpt/pdf_files/202303181737070649.pdf"
+file_path = "/home/bsz/data/chatglm/document_agent/workspace/pdf_files/202303181737070649.pdf"
 check_page_num(file_path)
 
 code = '''
@@ -46,3 +46,9 @@ file_path = 'dafafs.etxt'
 file_type=('pdf','txt')
 if file_path.endswith(file_type):
     print(file_path)
+ 
+ 
+program_name = '333'
+skill_description= '222'   
+a = f"async function {program_name}(bot) {{\n{skill_description}\n}}"
+print(a)

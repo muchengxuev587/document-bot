@@ -73,7 +73,6 @@ class ActionAgent:
                 result = event['result'][0]
                 result_messages.append(result)
               
-
         observation = ""
 
         if code:
