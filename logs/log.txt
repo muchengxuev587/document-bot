@@ -1001,3 +1001,19 @@ read_pdf(file_path="/home/bsz/data/chatglm/document_agent/workspace/pdf_files/20
   File "<string>", line 28, in <module>
 TypeError: read_pdf() got an unexpected keyword argument 'file_path'
 [0m
+2023-11-09 10:36:45.882 | INFO     | motoko_project.motoko:learn:270 - current command line position:/home/bsz/data/chatglm/document_agent
+
+current conda env:# conda environments:
+#
+base                     /opt/conda
+bsz                      /opt/conda/envs/bsz
+cv-project               /opt/conda/envs/cv-project
+localGPT                 /opt/conda/envs/localGPT
+medglm                   /opt/conda/envs/medglm
+metagpt               *  /opt/conda/envs/metagpt
+open-llama               /opt/conda/envs/open-llama
+pygame                   /opt/conda/envs/pygame
+
+
+2023-11-09 10:36:45.883 | INFO     | motoko_project.env.bridge_m:run:74 - Running code: 
+

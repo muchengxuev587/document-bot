@@ -267,7 +267,7 @@ class Motoko:
     def learn(self, reset_env=False):
         # peek an observation to start learning process for curriculum agent
         _, basic_info = self.env.reset()
-        logger.info(f"current command line position:{basic_info['position'][0]}\ncurrent conda env:{basic_info['conda info'][0]}")
+        logger.info(f"current command line position:{basic_info['position'][0]}\ncurrent conda env:{basic_info['conda_info'][0]}")
         empty_msg = ((),{'mode': "text", "code":'', 'code_file_name':''})
         self.last_events = self.env.step(empty_msg)
 
